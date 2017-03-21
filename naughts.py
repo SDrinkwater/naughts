@@ -12,21 +12,19 @@ def coordinate_to_board_position(coordinate):
 
 def game_over(moves):
 	if moves[0][0] != ' ' and moves[0][0] == moves[0][1] == moves[0][2]:
-		return True, moves[0][0]
+		return moves[0][0]
 	if moves[0][0] != ' ' and moves[0][0] == moves[1][0] == moves[2][0]:
-		return True, moves[0][0]
+		return moves[0][0]
 	if moves[0][0] != ' ' and moves[0][0] == moves[1][1] == moves[2][2]:
-		return True, moves[0][0]
+		return moves[0][0]
 	if moves[0][2] != ' ' and moves[0][2] == moves[1][2] == moves[2][2]:
-		return True, moves[0][2]
+		return moves[0][2]
 	if moves[0][2] != ' ' and moves[0][2] == moves[1][1] == moves[2][0]:
-		return True, moves[0][2]
+		return moves[0][2]
 	if moves[2][0] != ' ' and moves[2][0] == moves[2][1] == moves[2][2]:
-		return True, moves[2][0]
+		return moves[2][0]
 	if moves[1][0] != ' ' and moves[1][0] == moves[1][1] == moves[1][2]:
-		return True, moves[1][0]
-
-	return False, None
+		return moves[1][0]
 
 
 def print_board(moves):
@@ -91,7 +89,7 @@ def play_game(players):
 		[' ', ' ', ' '],
 	]
 	b = Bot('X')
-	winner = ''
+	winner = None
 
 	while moves_taken < 9:
 		player = players[moves_taken % 2]
@@ -105,8 +103,8 @@ def play_game(players):
 
 		moves[int(move[0])][int(move[1])] = player
 		moves_taken += 1
-		game_state, winner = game_over(moves)
-		if game_state:
+		winner = game_over(moves)
+		if winner:
 			break
 	print_board(moves)
 	if winner:
