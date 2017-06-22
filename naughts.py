@@ -81,7 +81,7 @@ def get_input(message, options=['y', 'n']):
             return response
 
 
-def play_game(players):
+def play_game(players, starting):
     moves_taken = 0
     moves = [
         [' ', ' ', ' '],
@@ -90,6 +90,7 @@ def play_game(players):
     ]
     b = Bot('X')
     winner = None
+    player = starting and 'O' or 'X'
 
     while moves_taken < 9:
         player = players[moves_taken % 2]
@@ -119,10 +120,11 @@ def signal_handler(signal, frame):
 
 
 def main():
-    players = ['X', 'O']
+    starting = get_input('Do you want to start? (y/n) ') == 'y'
+    players = starting and ['O', 'X'] or ['X', 'O']
 
     while True:
-        play_game(players)
+        play_game(players, starting)
         if get_input('Play again? (y/n) ') == 'n':
             break
 
